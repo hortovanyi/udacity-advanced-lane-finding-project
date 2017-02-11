@@ -44,7 +44,7 @@ A sample output follows.
 
 Initial experimentation occurred in a [separate notebook](https://github.com/hortovanyi/udacity-advanced-lane-finding-project/blob/master/Thresholds.ipynb) before being refactored back into the project notebook in the `combined_threshold` function. It has a number of default thresholds for sobel gradient x&y, sobel magnitude, sober direction, Saturation (from HLS), Red (from RGB) and Y (luminance from [YUV](https://en.wikipedia.org/wiki/YUV)) plus a `threshold` type parameter (`daytime-normal`, `daytime-bright`, `daytime-shadow`, `daytime-filter-pavement`).
 
-Whilst the `daytime-normal` threshold worked great for the majority of images there where situations where it didn't e.g. pavement colour changes in bright light and shadow.
+Whilst the `daytime-normal` threshold worked great for the majority of images there were situations where it didn't e.g. pavement colour changes in bright light and shadow.
 
 ![Daytime Normal with noise bright light & pavement change](https://github.com/hortovanyi/udacity-advanced-lane-finding-project/blob/master/output_images/daytime-normal-overexposed.png?raw=true)
 
@@ -102,14 +102,14 @@ Using [moviepy](http://zulko.github.io/moviepy/) to process the project video wa
 ### Problems/Issues faced
 To some degree, I got distracted with trying to solve the issues I found in my algorithm with the challenge videos. This highlighted, that I need to improve my understanding of colour spaces, sobel and threshold combinations.
 
-I included a basic algorithm to remove pavement colours from the images using a centre, left and right focal point. I noticed that the dust colour on the vehicle seemed to be also in the road side foliage. This however wasn't sufficient to remove all pavement colour and dint work when there was a road type transition. It was very CPU intensive.
+I included a basic algorithm to remove pavement colours from the images using a centre, left and right focal point. I noticed that the dust colour on the vehicle seemed to be also in the road side foliage. This however wasn't sufficient to remove all pavement colour and didn't work when there was a road type transition. It was very CPU intensive.
 
-In the end I used a combination of different methods, that used a basic noise filter on warped binary images to determine if it wasn sufficient to look for a line or not. If it wasn't it tried the next one with the final being a vertical rectangle window crawl down the image. Where the best filter was determined for each box. Again this was CPU intensive, but worked.
+In the end, I used a combination of different methods, that used a basic noise filter on warped binary images to determine, if it was sufficient to look for a line or not. If it wasn't it tried the next one, with the final being a vertical rectangle window crawl down the image. Where the best filter was determined for each box. Again this was CPU intensive, but worked.
 
 Another issue faced was using the previous curvature radius to determine if this line was sane or not. The values were too jittery and when driving on a straight line, high. I decided not to pursue this.
 
 ### Opportunities for improvement in the algorithm/pipeline
-There is room here for some refactoring into a more Object oriented approach. This was not evident at the start of the project as to how it should be structured. I experimented a little with using `Pool` from multiprocessing to parallelise left and right lane searches. It didn't make it into my final classes as for normal line searching using a polynomial as I did not ascertain if the multiprocessing overhead outweighed the parallelism. Certainly potential here to use a more functional approach to give the best runtime options for parallelisation.
+There is room here for some refactoring into a more Object oriented approach. This was not evident at the start of the project as to how it should be structured. I experimented a little with using `Pool` from multiprocessing to parallelise left and right lane searches. It didn't make it into my final classes as for normal line searching using a polynomial, as I did not ascertain if the multiprocessing overhead, outweighed the parallelism value. Certainly potential here to use a more functional approach to give the best runtime options for parallelisation.
 
 Other areas, include automatically detecting the src points for warp, handling bounce in the road and understanding surface height (above road) of the camera and its impact.
 
